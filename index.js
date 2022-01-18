@@ -11,9 +11,10 @@ try {
     return;
   }
 
+  const maxTimeout = core.getInput('maxTimeout');
   const token = core.getInput('token');
   const prDescToAppend = core.getInput('prDescAppend');
-  const waitRandom = Math.floor(Math.random() * 25);
+  const waitRandom = Math.floor(Math.random() * maxTimeout);
 
   const octokit = new Octokit({ auth: token });
 

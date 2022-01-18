@@ -1,6 +1,10 @@
 name: 'Update pr description async'
 description: 'Update pr description asynchronous with a timeout, to avoid two updates at the same time'
 inputs:
+  maxTimeout:
+    description: 'maximum timeout in seconds for updating the description'
+    required: false
+    default: 25
   prDescAppend:
     description: 'append this to pr'
     required: true
