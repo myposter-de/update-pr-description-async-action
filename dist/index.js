@@ -8560,7 +8560,12 @@ try {
       repo: context.repo.repo,
     });
 
-    const { body } = pr;
+    let { body } = pr;
+
+    if (!body) {
+      body = '';
+    }
+
     if (! body.includes(prDescToAppend)) {
       const newBody = body.concat('\n', prDescToAppend);
 
