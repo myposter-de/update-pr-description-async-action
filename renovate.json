@@ -1,5 +1,9 @@
 {
-  "extends": [
-    "config:base"
+  "extends": [ "github>myposter-de/renovate-config" ],
+  "assignees": [ "porkus1990" ],
+  "reviewers": [
+    "Botz",
+    "porkus1990",
+    "Tom-El-Egant",
   ]
 }
