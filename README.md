@@ -13,5 +13,6 @@ The timeout is neccessary because it may happen, that two jobs trigger the actio
   with:
     token: ${{ inputs.GH_TOKEN }}
     prDescAppend: '🚀 append me! 🚀'
+    maxTimeout: 25 # default is 25 (seconds)
 
 ```
