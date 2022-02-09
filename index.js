@@ -37,6 +37,7 @@ try {
       let links = body.match(/(?<=🚀\s+).*?(?=\s+🚀)/gs) || [];
 
       if (links.length) {
+        links.forEach(r => body = body.replace(`${r} 🚀`, ''));
         links = links.map((prev) => prev.replace('🚀', '').trim());
       }
 
@@ -45,7 +46,7 @@ try {
           .sort((linkFirst, linkSecond) => linkFirst !== linkSecond ? linkFirst < linkSecond ? -1 : 1 : 0)
           .map((link) => `🚀 ${link}`);
 
-      const newBody = links.join('🚀 \n');
+      const newBody = `${body} \n ${links.join('🚀 \n')}`;
 
       console.debug('new body: ', newBody);
 
