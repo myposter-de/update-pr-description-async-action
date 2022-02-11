@@ -8567,7 +8567,19 @@ try {
     }
 
     if (! body.includes(prDescToAppend)) {
-      const newBody = body.concat('\n', prDescToAppend);
+      let links = body.match(/(?<=🚀\s+).*?(?=\s+🚀)/gs) || [];
+
+      if (links.length) {
+        links.forEach(r => body = body.replace(`${r} 🚀`, ''));
+        links = links.map((prev) => prev.replace('🚀', '').trim());
+      }
+
+      links.push(prDescToAppend);
+      links = links
+          .sort((linkFirst, linkSecond) => linkFirst !== linkSecond ? linkFirst < linkSecond ? -1 : 1 : 0)
+          .map((link) => `🚀 ${link}`);
+
+      const newBody = `${body} \n ${links.join('🚀 \n')}`;
 
       console.debug('new body: ', newBody);
 
