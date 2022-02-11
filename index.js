@@ -46,8 +46,7 @@ try {
       links.push(prDescToAppend);
       // sort links and readd the rocket
       links = links
-          .sort((linkFirst, linkSecond) => linkFirst !== linkSecond ? linkFirst < linkSecond ? -1 : 1 : 0)
-          .map((link) => `🚀 ${link}`);
+          .sort((linkFirst, linkSecond) => linkFirst !== linkSecond ? linkFirst < linkSecond ? -1 : 1 : 0);
 
       //append cleaned-old body to sorted links
       const newBody = `${body} \n ${links.join('🚀 \n')}`;

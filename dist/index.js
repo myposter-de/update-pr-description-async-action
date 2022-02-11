@@ -8570,15 +8570,18 @@ try {
       let links = body.match(/(?<=🚀\s+).*?(?=\s+🚀)/gs) || [];
 
       if (links.length) {
+        // clean "old" body of all preview links
         links.forEach(r => body = body.replace(`${r} 🚀`, ''));
+        // remove emojis, as long as we have the rocket
         links = links.map((prev) => prev.replace('🚀', '').trim());
       }
 
       links.push(prDescToAppend);
+      // sort links and readd the rocket
       links = links
-          .sort((linkFirst, linkSecond) => linkFirst !== linkSecond ? linkFirst < linkSecond ? -1 : 1 : 0)
-          .map((link) => `🚀 ${link}`);
+          .sort((linkFirst, linkSecond) => linkFirst !== linkSecond ? linkFirst < linkSecond ? -1 : 1 : 0);
 
+      //append cleaned-old body to sorted links
       const newBody = `${body} \n ${links.join('🚀 \n')}`;
 
       console.debug('new body: ', newBody);
