@@ -14,6 +14,7 @@ try {
   const maxTimeout = core.getInput('maxTimeout');
   const token = core.getInput('token');
   const prDescToAppend = core.getInput('prDescAppend');
+  const isTicketUpdate = core.getInput('isTicketUpdate');
   const waitRandom = Math.floor(Math.random() * maxTimeout);
 
   const octokit = new Octokit({ auth: token });
@@ -27,13 +28,29 @@ try {
       repo: context.repo.repo,
     });
 
+    let newBody = '';
     let { body } = pr;
 
     if (!body) {
       body = '';
     }
 
-    if (! body.includes(prDescToAppend)) {
+    if (isTicketUpdate) {
+      if (body === '') {
+        newBody = prDescToAppend;
+      } else {
+        const jiraRegex = /[A-Z]+(?!-?[a-zA-Z]{1,10})-\d+/g;
+
+        const matchedIssues = body.match(jiraRegex);
+
+        if (matchedIssues?.length) {
+          const issue = matchedIssues[1];
+          newBody = body.replace(`::${issue}`, `[${issue}](https://myposter.atlassian.net/browse/${issue})`);
+        }
+      }
+    }
+
+    if (! isTicketUpdate && ! body.includes(prDescToAppend)) {
       let links = body.match(/(?<=🚀\s+).*?(?=\s+🚀)/gs) || [];
 
       if (links.length) {
@@ -49,19 +66,20 @@ try {
           .sort((linkFirst, linkSecond) => linkFirst !== linkSecond ? linkFirst < linkSecond ? -1 : 1 : 0);
 
       //append cleaned-old body to sorted links
-      const newBody = `${body} \n ${links.join('🚀 \n')}`;
+      newBody = `${body} \n ${links.join('🚀 \n')}`;
 
       console.debug('new body: ', newBody);
 
-      await octokit.rest.pulls.update({
-        pull_number: context.payload.pull_request.number,
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        body: newBody,
-      });
     } else {
       console.debug('not appending body - body is up to date');
+      return;
     }
+    await octokit.rest.pulls.update({
+      pull_number: context.payload.pull_request.number,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      body: newBody,
+    });
   }, waitRandom);
 } catch (error) {
   core.setFailed(error.message);

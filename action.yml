@@ -8,6 +8,10 @@ inputs:
   prDescAppend:
     description: 'append this to pr'
     required: true
+  isTicketUpdate:
+    description: 'updated ticket link = true, preview links = false'
+    required: false
+    default: false
   token:
     description: 'the git token'
     required: true
