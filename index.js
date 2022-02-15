@@ -36,9 +36,7 @@ try {
     }
 
     if (isTicketUpdate) {
-      if (body === '') {
-        newBody = prDescToAppend;
-      } else {
+      if (body !== '') {
         const jiraRegex = /[A-Z]+(?!-?[a-zA-Z]{1,10})-\d+/g;
 
         const matchedIssues = body.match(jiraRegex);
@@ -67,10 +65,9 @@ try {
 
       //append cleaned-old body to sorted links
       newBody = `${body} \n ${links.join('🚀 \n')}`;
-
-      console.debug('new body: ', newBody);
-
     }
+
+    console.log('new body: ', newBody);
 
     if (newBody !== '') {
       await octokit.rest.pulls.update({

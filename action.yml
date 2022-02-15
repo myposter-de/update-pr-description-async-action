@@ -7,7 +7,8 @@ inputs:
     default: 25
   prDescAppend:
     description: 'append this to pr'
-    required: true
+    required: false
+    default: ''
   isTicketUpdate:
     description: 'updated ticket link = true, preview links = false'
     required: false
