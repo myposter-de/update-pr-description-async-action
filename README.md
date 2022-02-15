@@ -13,6 +13,7 @@ The timeout is neccessary because it may happen, that two jobs trigger the actio
   with:
     token: ${{ inputs.GH_TOKEN }}
     prDescAppend: '🚀 append me! 🚀'
+    isTicketUpdate: true or false #true, for set jira link on pr-description
     maxTimeout: 25 # default is 25 (seconds)
 
 ```
