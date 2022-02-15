@@ -8547,7 +8547,7 @@ try {
   const maxTimeout = core.getInput('maxTimeout');
   const token = core.getInput('token');
   const prDescToAppend = core.getInput('prDescAppend');
-  const isTicketUpdate = core.getInput('isTicketUpdate');
+  const isTicketUpdate = !! core.getInput('isTicketUpdate');
   const waitRandom = Math.floor(Math.random() * maxTimeout);
 
   const octokit = new Octokit({ auth: token });
