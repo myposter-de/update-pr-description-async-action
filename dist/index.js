@@ -8603,16 +8603,16 @@ try {
 
       console.debug('new body: ', newBody);
 
-    } else {
-      console.debug('not appending body - body is up to date');
-      return;
     }
-    await octokit.rest.pulls.update({
-      pull_number: context.payload.pull_request.number,
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      body: newBody,
-    });
+
+    if (newBody !== '') {
+      await octokit.rest.pulls.update({
+        pull_number: context.payload.pull_request.number,
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        body: newBody,
+      });
+    }
   }, waitRandom);
 } catch (error) {
   core.setFailed(error.message);
