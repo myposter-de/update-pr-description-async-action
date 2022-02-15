@@ -42,7 +42,7 @@ try {
         const matchedIssues = body.match(jiraRegex);
 
         if (matchedIssues?.length) {
-          const issue = matchedIssues[1];
+          const issue = matchedIssues[0];
           newBody = body.replace(`::${issue}`, `[${issue}](https://myposter.atlassian.net/browse/${issue})`);
         }
       }
