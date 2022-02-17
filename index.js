@@ -31,6 +31,8 @@ try {
     let newBody = '';
     let { body } = pr;
 
+    console.log('prData: ', pr);
+
     if (!body) {
       body = '';
     }
