@@ -8564,6 +8564,7 @@ try {
     let newBody = '';
     let { body } = pr;
 
+    console.log('isTicketUpdate: ', isTicketUpdate);
     console.log('prData: ', pr);
 
     if (!body) {
@@ -8582,6 +8583,8 @@ try {
         }
       }
     }
+
+    console.log('body.includes(prDescToAppend) ', body.includes(prDescToAppend));
 
     if (! isTicketUpdate && ! body.includes(prDescToAppend)) {
       let links = body.match(/(?<=🚀\s+).*?(?=\s+🚀)/gs) || [];
