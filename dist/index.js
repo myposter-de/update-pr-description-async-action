@@ -8547,7 +8547,7 @@ try {
   const maxTimeout = core.getInput('maxTimeout');
   const token = core.getInput('token');
   const prDescToAppend = core.getInput('prDescAppend');
-  const isTicketUpdate = !! core.getInput('isTicketUpdate');
+  const isTicketUpdate = core.getInput('isTicketUpdate');
   const waitRandom = Math.floor(Math.random() * maxTimeout);
 
   const octokit = new Octokit({ auth: token });
@@ -8565,13 +8565,12 @@ try {
     let { body } = pr;
 
     console.log('isTicketUpdate: ', isTicketUpdate);
-    console.log('prData: ', pr);
 
     if (!body) {
       body = '';
     }
 
-    if (isTicketUpdate) {
+    if (isTicketUpdate === 'true') {
       if (body !== '') {
         const jiraRegex = /[A-Z]+(?!-?[a-zA-Z]{1,10})-\d+/g;
 
@@ -8584,9 +8583,7 @@ try {
       }
     }
 
-    console.log('body.includes(prDescToAppend) ', body.includes(prDescToAppend));
-
-    if (! isTicketUpdate && ! body.includes(prDescToAppend)) {
+    if (isTicketUpdate === 'false' && ! body.includes(prDescToAppend)) {
       let links = body.match(/(?<=🚀\s+).*?(?=\s+🚀)/gs) || [];
 
       if (links.length) {
