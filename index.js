@@ -62,11 +62,9 @@ try {
 
       links.push(prDescToAppend);
       // sort links and readd the rocket
-      links = links
-          .sort((linkFirst, linkSecond) => linkFirst !== linkSecond ? linkFirst < linkSecond ? -1 : 1 : 0);
-
+      links = links.sort();
       //append cleaned-old body to sorted links
-      newBody = `${body} \n ${links.join('🚀 \n')}`;
+      newBody = `${body} \n ${links.join('\n')}`;
     }
 
     console.log('new body: ', newBody);
